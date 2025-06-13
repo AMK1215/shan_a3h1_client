@@ -18,6 +18,6 @@ use App\Http\Controllers\Api\V1\GetBalanceController;
 
 // client get balance
 
-Route::group(['prefix' => 'api/shan'], function () {
+Route::group(['prefix' => 'shan'], function () {
     Route::post('balance', [GetBalanceController::class, 'getBalance']);
 });

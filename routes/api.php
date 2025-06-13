@@ -20,4 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 // get balance
-Route::post('/get-balance', [GetBalanceController::class, 'getBalance']);
+
+Route::group(['prefix' => 'api/shan'], function () {
+    Route::get('balance', [GetBalanceController::class, 'getBalance']);
+});

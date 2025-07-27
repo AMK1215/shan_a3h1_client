@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\GetBalanceController;
+use App\Http\Controllers\Api\V1\ShanLaunchGameController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,4 +21,11 @@ use App\Http\Controllers\Api\V1\GetBalanceController;
 
 Route::group(['prefix' => 'shan'], function () {
     Route::post('balance', [GetBalanceController::class, 'getBalance']);
+});
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    // route prefix shan 
+    Route::group(['prefix' => 'shankomee'], function () {
+        Route::post('launch-game', [ShanLaunchGameController::class, 'launchGame']);
+    });
 });

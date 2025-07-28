@@ -51,7 +51,7 @@ class BalanceUpdateCallbackController extends Controller
             ], 400);
         }
 
-        $providerSecretKey = Config::get('seamless_key.secret_key');
+        $providerSecretKey = Config::get('shan_key.secret_key');
         if (!$providerSecretKey) {
             Log::critical('ClientSite: Provider secret key not configured!');
             return response()->json([

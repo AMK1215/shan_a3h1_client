@@ -24,6 +24,7 @@ Route::post('login', [AuthController::class, 'login']);
 
 Route::group(['prefix' => 'shan'], function () {
     Route::post('balance', [GetBalanceController::class, 'getBalance']);
+    Route::post('/client/balance-update', [BalanceUpdateCallbackController::class, 'handleBalanceUpdate']); 
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {

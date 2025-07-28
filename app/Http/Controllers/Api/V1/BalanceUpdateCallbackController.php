@@ -89,7 +89,7 @@ class BalanceUpdateCallbackController extends Controller
 
         // --- 4. Verify Signature ---
         // Recreate the payload for signature verification, EXCLUDING the 'signature' field itself.
-        $payloadForSignature = $request->except('signature')->all();
+        $payloadForSignature = $request->except('signature');
         // Ensure the payload is sorted consistently before JSON encoding for HASH_HMAC
         ksort($payloadForSignature); // Sort by key
         

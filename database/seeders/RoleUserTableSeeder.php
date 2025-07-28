@@ -12,10 +12,15 @@ class RoleUserTableSeeder extends Seeder
      */
     public function run(): void
     {
-        User::findOrFail(1)->roles()->sync(1);
-        User::findOrFail(2)->roles()->sync(2);
-        User::findOrFail(3)->roles()->sync(3);
-        User::findOrFail(4)->roles()->sync(4);
+        User::findOrFail(1)->roles()->sync(1); // owner
+        User::findOrFail(2)->roles()->sync(2); // agent
+        User::findOrFail(3)->roles()->sync(3); // player 1
+        User::findOrFail(4)->roles()->sync(3); // player 2
+        User::findOrFail(5)->roles()->sync(3); // player 3
+        User::findOrFail(6)->roles()->sync(3); // player 4
+        User::findOrFail(7)->roles()->sync(3); // player 5
+        User::findOrFail(8)->roles()->sync(4);
+       
 
     }
 }

@@ -136,7 +136,14 @@ class BalanceUpdateCallbackController extends Controller
             }
 
             // Record the processed wager_code to prevent duplicates
-            ProcessedWagerCallback::create(['wager_code' => $validated['wager_code']]);
+            ProcessedWagerCallback::create([
+                'wager_code' => $validated['wager_code'],
+                'game_type_id' => 15,
+                'players' => $validated['players'],
+                'banker_balance' => $validated['banker_balance'],
+                'timestamp' => $validated['timestamp'],
+                'total_player_net' => $validated['total_player_net'],
+                'banker_amount_change' => $validated['banker_amount_change']]);
 
             DB::commit();
 

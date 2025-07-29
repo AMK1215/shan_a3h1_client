@@ -14,6 +14,13 @@ return new class extends Migration
         Schema::create('processed_wager_callbacks', function (Blueprint $table) {
             $table->id();
             $table->string('wager_code')->unique();
+            $table->string('wager_code');              // from $wager_code
+            $table->unsignedBigInteger('game_type_id');// always 15 here, but keep column
+            $table->json('players');                   // stores $callbackPlayers array
+            $table->decimal('banker_balance', 15, 2);  // banker->wallet->balanceFloat
+            $table->timestampTz('timestamp');          // ISO8601 UTC timestamp
+            $table->decimal('total_player_net', 15, 2);// $trueTotalPlayerNet
+            $table->decimal('banker_amount_change', 15, 2); // $bankerAmountChange
             $table->timestamps();
         });
     }

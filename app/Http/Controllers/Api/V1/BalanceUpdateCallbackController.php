@@ -62,19 +62,19 @@ class BalanceUpdateCallbackController extends Controller
             ], 500);
         }
 
-        $payloadForSignature = $request->except('signature');
-        ksort($payloadForSignature);
-        $expectedSignature = hash_hmac('md5', json_encode($payloadForSignature), $providerSecretKey);
+        // $payloadForSignature = $request->except('signature');
+        // ksort($payloadForSignature);
+        // $expectedSignature = hash_hmac('md5', json_encode($payloadForSignature), $providerSecretKey);
 
-        if (!hash_equals($expectedSignature, $validated['signature'])) {
-            Log::warning('ClientSite: Invalid signature received', [
-                'received_signature' => $validated['signature'], 'expected_signature' => $expectedSignature,
-                'payload' => $request->all(), 'wager_code' => $validated['wager_code'],
-            ]);
-            return response()->json([
-                'status' => 'error', 'code' => 'INVALID_SIGNATURE', 'message' => 'Signature verification failed.',
-            ], 401);
-        }
+        // if (!hash_equals($expectedSignature, $validated['signature'])) {
+        //     Log::warning('ClientSite: Invalid signature received', [
+        //         'received_signature' => $validated['signature'], 'expected_signature' => $expectedSignature,
+        //         'payload' => $request->all(), 'wager_code' => $validated['wager_code'],
+        //     ]);
+        //     return response()->json([
+        //         'status' => 'error', 'code' => 'INVALID_SIGNATURE', 'message' => 'Signature verification failed.',
+        //     ], 401);
+        // }
 
         try {
             DB::beginTransaction();

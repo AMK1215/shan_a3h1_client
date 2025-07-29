@@ -54,6 +54,7 @@ class BalanceUpdateCallbackController extends Controller
         }
 
         $providerSecretKey = Config::get('shan_key.secret_key');
+        Log::info('ClientSite: Provider secret key', ['provider_secret_key' => $providerSecretKey]);
         if (!$providerSecretKey) {
             Log::critical('ClientSite: Provider secret key not configured!');
             return response()->json([
@@ -63,7 +64,7 @@ class BalanceUpdateCallbackController extends Controller
 
         $payloadForSignature = $request->except('signature');
         ksort($payloadForSignature);
-        $expectedSignature = hash_hmac('sha256', json_encode($payloadForSignature), $providerSecretKey);
+        $expectedSignature = hash_hmac('md5', json_encode($payloadForSignature), $providerSecretKey);
 
         if (!hash_equals($expectedSignature, $validated['signature'])) {
             Log::warning('ClientSite: Invalid signature received', [

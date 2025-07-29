@@ -136,14 +136,27 @@ class BalanceUpdateCallbackController extends Controller
             }
 
             // Record the processed wager_code to prevent duplicates
+            // ProcessedWagerCallback::create([
+            //     'wager_code' => $validated['wager_code'],
+            //     'game_type_id' => 15,
+            //     'players' => $validated['players'],
+            //     'banker_balance' => $validated['banker_balance'],
+            //     'timestamp' => $validated['timestamp'],
+            //     'total_player_net' => $validated['total_player_net'],
+            //     'banker_amount_change' => $validated['banker_amount_change']]);
+
             ProcessedWagerCallback::create([
                 'wager_code' => $validated['wager_code'],
                 'game_type_id' => 15,
-                'players' => $validated['players'],
+                'players' => json_encode($validated['players']), // ✅ encode array to JSON string
                 'banker_balance' => $validated['banker_balance'],
                 'timestamp' => $validated['timestamp'],
                 'total_player_net' => $validated['total_player_net'],
-                'banker_amount_change' => $validated['banker_amount_change']]);
+                'banker_amount_change' => $validated['banker_amount_change'],
+            ]);
+
+            Log::info('ClientSite: ProcessedWagerCallback created', ['wager_code' => $validated['wager_code']]);
+            
 
             DB::commit();
 

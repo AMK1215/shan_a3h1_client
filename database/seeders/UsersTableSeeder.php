@@ -3,55 +3,90 @@
 namespace Database\Seeders;
 
 use App\Enums\TransactionName;
-use App\Enums\TransactionType;
 use App\Enums\UserType;
 use App\Models\User;
 use App\Services\WalletService;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class UsersTableSeeder extends Seeder
 {
     public function run(): void
     {
+        $walletService = new WalletService;
 
-        $admin = $this->createUser(UserType::Admin, 'Owner', 'luckym', '09123456789');
-        (new WalletService)->deposit($admin, 502000, TransactionName::CapitalDeposit);
+        // Create owner with large initial capital
+        $owner = $this->createUser(
+            UserType::Owner,
+            'ShanKomee',
+            'ShanKomeeProvider',
+            '09123456789',
+            null,
+            'ShanKomeeProvider'.Str::random(6)
+        );
+        $walletService->deposit($owner, 500_000_00000000, TransactionName::CapitalDeposit);
 
-        $agent_1 = $this->createUser(UserType::Agent, 'Agent 1', 'A898737', '09112345674', $admin->id, 'vH4HueE9');
-        (new WalletService)->transfer($admin, $agent_1, 10000.0, TransactionName::CreditTransfer);
+        // Create system wallet
+        $systemWallet = $this->createUser(
+            UserType::SystemWallet,
+            'System Wallet',
+            'SYS001',
+            '09222222222',
+            null,
+            'SYS'.Str::random(6)
+        );
+        $walletService->deposit($systemWallet, 500 * 100_0000, TransactionName::CapitalDeposit);
 
-        $player_1 = $this->createUser(UserType::Player, 'Player 1', 'P111111', '09111111111', $agent_1->id);
-        (new WalletService)->transfer($agent_1, $player_1, 3000.0, TransactionName::CreditTransfer);
-        $player_2 = $this->createUser(UserType::Player, 'Player 2', 'P111112', '09111111112', $agent_1->id);
-        (new WalletService)->transfer($agent_1, $player_2, 3000.0, TransactionName::CreditTransfer);
-        $player_3 = $this->createUser(UserType::Player, 'Player 3', 'P111113', '09111111113', $agent_1->id);
-        (new WalletService)->transfer($agent_1, $player_3, 3000.0, TransactionName::CreditTransfer);
-        $player_4 = $this->createUser(UserType::Player, 'Player 4', 'P111114', '09111111114', $agent_1->id);
-        (new WalletService)->transfer($agent_1, $player_4, 3000.0, TransactionName::CreditTransfer);
-        $player_5 = $this->createUser(UserType::Player, 'Player 5', 'P111115', '09111111115', $agent_1->id);
-        (new WalletService)->transfer($agent_1, $player_5, 3000.0, TransactionName::CreditTransfer);
-        // Create SuperAdmin
-        $superAdmin = $this->createUser(UserType::SuperAdmin, 'SuperAdmin', 'superadmin', '09100000000');
-        (new WalletService)->deposit($superAdmin, 5000000 * 10, TransactionName::CapitalDeposit);
+        // Create 10 agents
+        for ($i = 1; $i <= 2; $i++) {
+            $agent = $this->createUser(
+                UserType::Agent,
+                "ShanKomee Agent $i",
+                'ShanKomeeAgent'.str_pad($i, 3, '0', STR_PAD_LEFT),
+                '091123456'.str_pad($i, 2, '0', STR_PAD_LEFT),
+                $owner->id,
+                'ShanKomeeAgent'.Str::random(6)
+            );
+            // Random initial balance between 1.5M to 2.5M
+            $initialBalance = rand(1, 2) * 100_000;
+            $walletService->transfer($owner, $agent, $initialBalance, TransactionName::CreditTransfer);
 
+            // Create players directly under each agent (no sub-agents)
+            for ($k = 1; $k <= 4; $k++) {
+                $player = $this->createUser(
+                    UserType::Player,
+                    "ShanKomee Player $i-$k",
+                    'ShanKomeePlayer'.str_pad($i, 2, '0', STR_PAD_LEFT).str_pad($k, 2, '0', STR_PAD_LEFT),
+                    '091111111'.str_pad($i, 1, '0', STR_PAD_LEFT).str_pad($k, 2, '0', STR_PAD_LEFT),
+                    $agent->id,
+                    'ShanKomeePlayer'.Str::random(6)
+                );
+                // Fixed initial balance of 10,000
+                $initialBalance = 10000;
+                $walletService->transfer($agent, $player, $initialBalance, TransactionName::CreditTransfer);
+            }
+        }
     }
 
-    private function createUser(UserType $type, $name, $user_name, $phone, $parent_id = null, $referral_code = null)
-    {
+    private function createUser(
+        UserType $type,
+        string $name,
+        string $user_name,
+        string $phone,
+        ?int $parent_id = null,
+        ?string $referral_code = null
+    ): User {
         return User::create([
             'name' => $name,
             'user_name' => $user_name,
             'phone' => $phone,
-            'password' => Hash::make('delightmyanmar'),
+            'password' => Hash::make('shankomee'),
             'agent_id' => $parent_id,
             'status' => 1,
-            'referral_code' => $referral_code,
             'is_changed_password' => 1,
             'type' => $type->value,
-            'payment_type_id' => 1,
-            'account_name' => 'Test',
-            'account_number' => '3498787787',
+            'referral_code' => $referral_code,
         ]);
     }
 }

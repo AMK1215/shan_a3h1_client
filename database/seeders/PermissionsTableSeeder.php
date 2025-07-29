@@ -14,21 +14,17 @@ class PermissionsTableSeeder extends Seeder
     public function run(): void
     {
         $permissions = [
+
             [
-                'title' => 'admin_access',
-                'group' => 'admin',
+                'title' => 'owner_access',
+                'group' => 'owner',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+
             [
                 'title' => 'agent_access',
                 'group' => 'agent',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'title' => 'player_access',
-                'group' => 'player',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -117,24 +113,161 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'title' => 'site_logo',
+                'title' => 'contact',
                 'group' => 'agent',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title' => 'owner_index',
+                'group' => 'owner',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title' => 'owner_create',
+                'group' => 'owner',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title' => 'owner_edit',
+                'group' => 'owner',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title' => 'owner_delete',
+                'group' => 'owner',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
 
             [
-                'title' => 'superadmin_access',
-                'group' => 'superadmin',
+                'title' => 'system_wallet',
+                'group' => 'systemwallet',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'title' => 'superadmin_index',
-                'group' => 'superadmin',
+                'title' => 'system_wallet_access',
+                'group' => 'systemwallet',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'title' => 'report_check',
+                'group' => 'owner',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title' => 'game_type_access',
+                'group' => 'owner',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title' => 'provider_access',
+                'group' => 'owner',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title' => 'provider_create',
+                'group' => 'owner',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title' => 'provider_edit',
+                'group' => 'owner',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title' => 'provider_delete',
+                'group' => 'owner',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title' => 'provider_index',
+                'group' => 'owner',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title' => 'subagent_access',
+                'group' => 'agent',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title' => 'subagent_index',
+                'group' => 'agent',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title' => 'subagent_create',
+                'group' => 'agent',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title' => 'subagent_edit',
+                'group' => 'agent',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title' => 'subagent_delete',
+                'group' => 'agent',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title' => 'player_access',
+                'group' => 'agent',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            // subagent permission
+            [
+                'title' => 'subagent_player_create',
+                'group' => 'subagent',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'title' => 'subagent_deposit',
+                'group' => 'subagent',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title' => 'subagent_withdraw',
+                'group' => 'subagent',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'title' => 'player_view',
+                'group' => 'subagent',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'title' => 'subagent_access',
+                'group' => 'subagent',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
         ];
 
         Permission::insert($permissions);

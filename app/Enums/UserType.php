@@ -2,55 +2,42 @@
 
 namespace App\Enums;
 
-enum UserType: string
+enum UserType: int
 {
-    case Admin = 'admin';
-    case Agent = 'agent';
-    case Player = 'player';
-    case SuperAdmin = 'super_admin';
+    case Owner = 10;
+    case Agent = 20;
+    case SubAgent = 30;
+    case Player = 40;
+    case SystemWallet = 50;
 
-    public static function usernameLength(UserType $type)
+    public static function usernameLength(UserType $type): int
     {
         return match ($type) {
-            self::Admin => 1,
+            self::Owner => 1,
             self::Agent => 2,
-            self::Player => 3,
-            self::SuperAdmin => 4,
+            self::SubAgent => 3,
+            self::Player => 4,
+            self::SystemWallet => 5,
         };
     }
 
-    public static function childUserType(UserType $type)
+    public static function childUserType(UserType $type): UserType
     {
         return match ($type) {
-            self::SuperAdmin => self::Admin,
-            self::Admin => self::Agent,
-            self::Agent => self::Player,
-            self::Player => self::Player,
+            self::Owner => self::Agent,
+            self::Agent => self::SubAgent,
+            self::SubAgent => self::Player,
+            self::Player, self::SystemWallet => self::Player,
+        };
+    }
+
+    public static function canHaveChild(UserType $parent, UserType $child): bool
+    {
+        return match ($parent) {
+            self::Owner => $child === self::Agent,
+            self::Agent => $child === self::SubAgent || $child === self::Player,
+            self::SubAgent => $child === self::Player,
+            self::Player, self::SystemWallet => false,
         };
     }
 }
-
-// enum UserType: int
-// {
-//     case Admin = 10;
-//     case Agent = 20;
-//     case Player = 30;
-
-//     public static function usernameLength(UserType $type)
-//     {
-//         return match ($type) {
-//             self::Admin => 1,
-//             self::Agent => 2,
-//             self::Player => 3,
-//         };
-//     }
-
-//     public static function childUserType(UserType $type)
-//     {
-//         return match ($type) {
-//             self::Admin => self::Agent,
-//             self::Agent => self::Player,
-//             self::Player => self::Player
-//         };
-//     }
-// }

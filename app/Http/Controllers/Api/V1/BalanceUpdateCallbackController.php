@@ -39,7 +39,7 @@ class BalanceUpdateCallbackController extends Controller
                 'timestamp' => 'required|string',
                 'total_player_net' => 'nullable|numeric',
                 'banker_amount_change' => 'nullable|numeric',
-                'signature' => 'required|string|max:255',
+                //'signature' => 'required|string|max:255',
             ]);
         } catch (\Illuminate\Validation\ValidationException $e) {
             Log::error('ClientSite: BalanceUpdateCallback validation failed', [

@@ -13,6 +13,8 @@ use Bavix\Wallet\External\Dto\Extra; // Needed for meta data with forceDeposit/f
 use Bavix\Wallet\External\Dto\Option; // Needed for meta data with forceDeposit/forceWithdraw
 // Assuming you have TransactionName Enums on the client side too, or define strings directly
 // use App\Enums\TransactionName; // If you have this on client side
+use DateTimeImmutable; // <--- ADD THIS LINE
+use DateTimeZone;     // <--- ADD THIS LINE FOR CONSISTENCY WITH UTC
 
 class BalanceUpdateCallbackController extends Controller
 {
@@ -99,7 +101,7 @@ class BalanceUpdateCallbackController extends Controller
 
                 $meta = [
                     'wager_code' => $validated['wager_code'],
-                    'game_type_id' => $validated['game_type_id'],
+                    'game_type_id' => 15,
                     'provider_new_balance' => $newBalance,
                     'client_old_balance' => $currentBalance,
                     'description' => 'Game settlement from provider',

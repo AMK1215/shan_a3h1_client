@@ -1,32 +1,41 @@
 sudo apt install postgresql postgresql-contrib -y
 sudo systemctl status postgresql
-CREATE DATABASE shan_test_client_db;
-CREATE USER shan_client_user WITH PASSWORD 'luckymillion';
-GRANT ALL PRIVILEGES ON DATABASE shan_test_client_db TO shan_client_user;
-ALTER USER shan_client_user WITH PASSWORD 'luckymillion';
+CREATE DATABASE f5j2_db;
+CREATE USER f5j2_user WITH PASSWORD 'f5j2moonstar';
+GRANT ALL PRIVILEGES ON DATABASE f5j2_db TO f5j2_user;
+ALTER USER f5j2_user WITH PASSWORD 'f5j2moonstar';
 
 sudo -i -u postgres
-psql -d shan_test_client_db
+psql -d f5j2_db
 
-psql -h 127.0.0.1 -U shan_client_user -d shan_test_client_db
+psql -h 127.0.0.1 -U f5j2_user -d f5j2_db
 
-GRANT ALL ON SCHEMA public TO shan_client_user;
-ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO shan_client_user;
-ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO shan_client_user;
+GRANT ALL ON SCHEMA public TO f5j2_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO f5j2_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO f5j2_user;
 
 sudo -i -u postgres
 psql -d shan
-ALTER SCHEMA public OWNER TO shan_client_user;
+ALTER SCHEMA public OWNER TO f5j2_user;
 
 
 
-sudo chown -R www-data:www-data /var/www/shan_a3h1_client/storage
-sudo chown -R www-data:www-data /var/www/shan_a3h1_client/bootstrap/cache
-sudo chmod -R 775 /var/www/shan_a3h1_client/storage
-sudo chmod -R 775 /var/www/shan_a3h1_client/bootstrap/cache
+sudo chown -R www-data:www-data /var/www/F5J2_moonstar_backend/storage
+sudo chown -R www-data:www-data /var/www/F5J2_moonstar_backend/bootstrap/cache
+sudo chmod -R 775 /var/www/F5J2_moonstar_backend/storage
+sudo chmod -R 775 /var/www/F5J2_moonstar_backend/bootstrap/cache
 
 
 sudo systemctl restart postgresql
 
 sudo nano /etc/postgresql/16/main/pg_hba.conf
 root@gscpuls-prod:/var/www/gsc_plus# sudo nano /etc/postgresql/16/main/postgresql.conf
+
+
+Username: AG72360789
+Password: passsword
+Amount: 100000
+Shan Agent Code: A3H4
+Shan Agent Name: ShanAMK
+Shan Secret Key: OAcHbXVsPpwP0HX
+Shan Callback URL: https://ponewine20x.xyz

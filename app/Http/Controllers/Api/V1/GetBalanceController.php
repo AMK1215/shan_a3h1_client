@@ -22,7 +22,7 @@ class GetBalanceController extends Controller
         ]);
 
         // Signature check
-        $secretKey = Config::get('seamless_key.secret_key');
+        $secretKey = Config::get('shan_key.secret_key');
         $expectedSign = md5(
             $request->operator_code .
             $request->request_time .

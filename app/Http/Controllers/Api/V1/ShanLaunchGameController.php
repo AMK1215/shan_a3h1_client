@@ -74,6 +74,14 @@ class ShanLaunchGameController extends Controller
                 $payload['nickname'] = $request->input('nickname');
             }
 
+            // $agent = User::where('user_name', $agentCode)->first();
+            // if (!$agent) {
+            //     Log::error('Agent not found', ['agent_code' => $agentCode]);
+            //     return ApiResponseService::error(
+            //         SeamlessWalletCode::InternalServerError,
+            //         'Agent not found'
+            //     );
+
             // Call provider API to get launch game URL
             $providerApiUrl = config('shan_key.api_url') . '/api/client/launch-game';
             
